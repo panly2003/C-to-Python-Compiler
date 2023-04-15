@@ -10,7 +10,7 @@
 
 #### 1. 文件结构
 
-├── src 源代码文件夹
+├── **src 源代码文件夹**
 
 ​		    ├──  bubbleSort.c 排序测例
 
@@ -34,7 +34,7 @@
 
 ​		    ├──  main.cpp 整体main文件
 
-├── exe 包含两个测例 & 三个错误测例 & parser可执行文件 & main可执行文件
+├── **exe 包含两个测例 & 三个错误测例 & parser可执行文件 & main可执行文件**
 
 ​		    ├──  bubbleSort.c 排序测例
 
@@ -48,7 +48,7 @@
 
 ​		    ├── readme执行说明
 
-├── result 执行结果
+├── **result 执行结果**
 
 ​		    ├──  bubbleSort.json 排序语法分析产生的.json文件
 
@@ -62,7 +62,7 @@
 
 ​		    ├──  palindrome_string.py     回文串检测.c文件翻译出的python文件
 
-├── 文档
+├── **README**
 
 #### 2. 编译运行方法
 
