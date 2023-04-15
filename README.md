@@ -1,1 +1,1 @@
-# C-to-Python-compiler
+# C-to-Python compiler
