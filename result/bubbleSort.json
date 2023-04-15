@@ -1,0 +1,476 @@
+{
+	"BlockNode": [
+		{
+			"ArrayDeclarationNode": [
+				{
+					"IdentifierNode": "a"
+				},
+				{
+					"IntegerNode": "100"
+				}
+			]
+		},
+		{
+			"FunctionDeclarationNode": [
+				{
+					"IdentifierNode": "main"
+				},
+				{
+					"BlockNode": [
+						{
+							"VariableDeclarationNode": [
+								{
+									"IdentifierNode": "num"
+								}
+							]
+						},
+						{
+							"ExpressionStatementNode": [
+								{
+									"CallFuncNode": [
+										{
+											"IdentifierNode": "printf"
+										},
+										{
+											"LiteralNode": "Input the array length: "
+										}
+									]
+								}
+							]
+						},
+						{
+							"ExpressionStatementNode": [
+								{
+									"CallFuncNode": [
+										{
+											"IdentifierNode": "scanf"
+										},
+										{
+											"LiteralNode": "%d"
+										},
+										{
+											"AddrNode": [
+												{
+													"IdentifierNode": "num"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"ExpressionStatementNode": [
+								{
+									"CallFuncNode": [
+										{
+											"IdentifierNode": "printf"
+										},
+										{
+											"LiteralNode": "Input integers: "
+										}
+									]
+								}
+							]
+						},
+						{
+							"ForStatementNode": [
+								{
+									"VariableDeclarationNode": [
+										{
+											"IdentifierNode": "i"
+										},
+										{
+											"IntegerNode": "0"
+										}
+									]
+								},
+								{
+									"ExpressionStatementNode": [
+										{
+											"BinaryOperatorNode": [
+												{
+													"IdentifierNode": "i"
+												},
+												{
+													"IdentifierNode": "num"
+												}
+											]
+										}
+									]
+								},
+								{
+									"AssignmentNode": [
+										{
+											"IdentifierNode": "i"
+										},
+										{
+											"BinaryOperatorNode": [
+												{
+													"IdentifierNode": "i"
+												},
+												{
+													"IntegerNode": "1"
+												}
+											]
+										}
+									]
+								},
+								{
+									"BlockNode": [
+										{
+											"ExpressionStatementNode": [
+												{
+													"CallFuncNode": [
+														{
+															"IdentifierNode": "scanf"
+														},
+														{
+															"LiteralNode": "%d"
+														},
+														{
+															"AddrNode": [
+																{
+																	"ArrayIndexNode": [
+																		{
+																			"IdentifierNode": "a"
+																		},
+																		{
+																			"IdentifierNode": "i"
+																		}
+																	]
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"ForStatementNode": [
+								{
+									"VariableDeclarationNode": [
+										{
+											"IdentifierNode": "i"
+										},
+										{
+											"BinaryOperatorNode": [
+												{
+													"IdentifierNode": "num"
+												},
+												{
+													"IntegerNode": "1"
+												}
+											]
+										}
+									]
+								},
+								{
+									"ExpressionStatementNode": [
+										{
+											"BinaryOperatorNode": [
+												{
+													"IdentifierNode": "i"
+												},
+												{
+													"IntegerNode": "0"
+												}
+											]
+										}
+									]
+								},
+								{
+									"AssignmentNode": [
+										{
+											"IdentifierNode": "i"
+										},
+										{
+											"BinaryOperatorNode": [
+												{
+													"IdentifierNode": "i"
+												},
+												{
+													"IntegerNode": "1"
+												}
+											]
+										}
+									]
+								},
+								{
+									"BlockNode": [
+										{
+											"ForStatementNode": [
+												{
+													"VariableDeclarationNode": [
+														{
+															"IdentifierNode": "j"
+														},
+														{
+															"IntegerNode": "0"
+														}
+													]
+												},
+												{
+													"ExpressionStatementNode": [
+														{
+															"BinaryOperatorNode": [
+																{
+																	"IdentifierNode": "j"
+																},
+																{
+																	"IdentifierNode": "i"
+																}
+															]
+														}
+													]
+												},
+												{
+													"AssignmentNode": [
+														{
+															"IdentifierNode": "j"
+														},
+														{
+															"BinaryOperatorNode": [
+																{
+																	"IdentifierNode": "j"
+																},
+																{
+																	"IntegerNode": "1"
+																}
+															]
+														}
+													]
+												},
+												{
+													"BlockNode": [
+														{
+															"IfStatementNode": [
+																{
+																	"BinaryOperatorNode": [
+																		{
+																			"ArrayIndexNode": [
+																				{
+																					"IdentifierNode": "a"
+																				},
+																				{
+																					"IdentifierNode": "j"
+																				}
+																			]
+																		},
+																		{
+																			"ArrayIndexNode": [
+																				{
+																					"IdentifierNode": "a"
+																				},
+																				{
+																					"BinaryOperatorNode": [
+																						{
+																							"IdentifierNode": "j"
+																						},
+																						{
+																							"IntegerNode": "1"
+																						}
+																					]
+																				}
+																			]
+																		}
+																	]
+																},
+																{
+																	"BlockNode": [
+																		{
+																			"VariableDeclarationNode": [
+																				{
+																					"IdentifierNode": "tmp"
+																				},
+																				{
+																					"ArrayIndexNode": [
+																						{
+																							"IdentifierNode": "a"
+																						},
+																						{
+																							"IdentifierNode": "j"
+																						}
+																					]
+																				}
+																			]
+																		},
+																		{
+																			"ExpressionStatementNode": [
+																				{
+																					"ArrayAssignmentNode": [
+																						{
+																							"ArrayIndexNode": [
+																								{
+																									"IdentifierNode": "a"
+																								},
+																								{
+																									"IdentifierNode": "j"
+																								}
+																							]
+																						},
+																						{
+																							"ArrayIndexNode": [
+																								{
+																									"IdentifierNode": "a"
+																								},
+																								{
+																									"BinaryOperatorNode": [
+																										{
+																											"IdentifierNode": "j"
+																										},
+																										{
+																											"IntegerNode": "1"
+																										}
+																									]
+																								}
+																							]
+																						}
+																					]
+																				}
+																			]
+																		},
+																		{
+																			"ExpressionStatementNode": [
+																				{
+																					"ArrayAssignmentNode": [
+																						{
+																							"ArrayIndexNode": [
+																								{
+																									"IdentifierNode": "a"
+																								},
+																								{
+																									"BinaryOperatorNode": [
+																										{
+																											"IdentifierNode": "j"
+																										},
+																										{
+																											"IntegerNode": "1"
+																										}
+																									]
+																								}
+																							]
+																						},
+																						{
+																							"IdentifierNode": "tmp"
+																						}
+																					]
+																				}
+																			]
+																		}
+																	]
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"ExpressionStatementNode": [
+								{
+									"CallFuncNode": [
+										{
+											"IdentifierNode": "printf"
+										},
+										{
+											"LiteralNode": "Result: "
+										}
+									]
+								}
+							]
+						},
+						{
+							"ForStatementNode": [
+								{
+									"VariableDeclarationNode": [
+										{
+											"IdentifierNode": "i"
+										},
+										{
+											"IntegerNode": "0"
+										}
+									]
+								},
+								{
+									"ExpressionStatementNode": [
+										{
+											"BinaryOperatorNode": [
+												{
+													"IdentifierNode": "i"
+												},
+												{
+													"IdentifierNode": "num"
+												}
+											]
+										}
+									]
+								},
+								{
+									"AssignmentNode": [
+										{
+											"IdentifierNode": "i"
+										},
+										{
+											"BinaryOperatorNode": [
+												{
+													"IdentifierNode": "i"
+												},
+												{
+													"IntegerNode": "1"
+												}
+											]
+										}
+									]
+								},
+								{
+									"BlockNode": [
+										{
+											"ExpressionStatementNode": [
+												{
+													"CallFuncNode": [
+														{
+															"IdentifierNode": "printf"
+														},
+														{
+															"LiteralNode": "%d "
+														},
+														{
+															"ArrayIndexNode": [
+																{
+																	"IdentifierNode": "a"
+																},
+																{
+																	"IdentifierNode": "i"
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"ReturnStatementNode": [
+								{
+									"IntegerNode": "0"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

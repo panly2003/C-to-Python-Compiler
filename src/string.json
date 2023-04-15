@@ -1,0 +1,163 @@
+{
+	"BlockNode":	[{
+			"ArrayDeclarationNode":	[{
+					"IdentifierNode":	"a"
+				}, {
+					"IntegerNode":	"100"
+				}]
+		}, {
+			"FunctionDeclarationNode":	[{
+					"IdentifierNode":	"main"
+				}, {
+					"BlockNode":	[{
+							"VariableDeclarationNode":	[{
+									"IdentifierNode":	"num"
+								}]
+						}, {
+							"ExpressionStatementNode":	[{
+									"CallFuncNode":	[{
+											"IdentifierNode":	"printf"
+										}, {
+											"LiteralNode":	"Input the string length: "
+										}]
+								}]
+						}, {
+							"ExpressionStatementNode":	[{
+									"CallFuncNode":	[{
+											"IdentifierNode":	"scanf"
+										}, {
+											"LiteralNode":	"%d"
+										}, {
+											"AddrNode":	[{
+													"IdentifierNode":	"num"
+												}]
+										}]
+								}]
+						}, {
+							"ExpressionStatementNode":	[{
+									"CallFuncNode":	[{
+											"IdentifierNode":	"printf"
+										}, {
+											"LiteralNode":	"Input string: "
+										}]
+								}]
+						}, {
+							"ExpressionStatementNode":	[{
+									"CallFuncNode":	[{
+											"IdentifierNode":	"scanf"
+										}, {
+											"LiteralNode":	"%s"
+										}, {
+											"IdentifierNode":	"a"
+										}]
+								}]
+						}, {
+							"VariableDeclarationNode":	[{
+									"IdentifierNode":	"half"
+								}, {
+									"BinaryOperatorNode":	[{
+											"IdentifierNode":	"num"
+										}, {
+											"IntegerNode":	"2"
+										}]
+								}]
+						}, {
+							"ForStatementNode":	[{
+									"VariableDeclarationNode":	[{
+											"IdentifierNode":	"i"
+										}, {
+											"IntegerNode":	"0"
+										}]
+								}, {
+									"ExpressionStatementNode":	[{
+											"BinaryOperatorNode":	[{
+													"IdentifierNode":	"i"
+												}, {
+													"IdentifierNode":	"half"
+												}]
+										}]
+								}, {
+									"AssignmentNode":	[{
+											"IdentifierNode":	"i"
+										}, {
+											"BinaryOperatorNode":	[{
+													"IdentifierNode":	"i"
+												}, {
+													"IntegerNode":	"1"
+												}]
+										}]
+								}, {
+									"BlockNode":	[{
+											"VariableDeclarationNode":	[{
+													"IdentifierNode":	"x"
+												}, {
+													"BinaryOperatorNode":	[{
+															"IdentifierNode":	"num"
+														}, {
+															"IntegerNode":	"1"
+														}]
+												}]
+										}, {
+											"VariableDeclarationNode":	[{
+													"IdentifierNode":	"a1"
+												}, {
+													"ArrayIndexNode":	[{
+															"IdentifierNode":	"a"
+														}, {
+															"IdentifierNode":	"i"
+														}]
+												}]
+										}, {
+											"VariableDeclarationNode":	[{
+													"IdentifierNode":	"a2"
+												}, {
+													"ArrayIndexNode":	[{
+															"IdentifierNode":	"a"
+														}, {
+															"BinaryOperatorNode":	[{
+																	"IdentifierNode":	"x"
+																}, {
+																	"IdentifierNode":	"i"
+																}]
+														}]
+												}]
+										}, {
+											"IfStatementNode":	[{
+													"BinaryOperatorNode":	[{
+															"IdentifierNode":	"a1"
+														}, {
+															"IdentifierNode":	"a2"
+														}]
+												}, {
+													"BlockNode":	[{
+															"ExpressionStatementNode":	[{
+																	"CallFuncNode":	[{
+																			"IdentifierNode":	"printf"
+																		}, {
+																			"LiteralNode":	"FALSE!"
+																		}]
+																}]
+														}, {
+															"ReturnStatementNode":	[{
+																	"IntegerNode":	"0"
+																}]
+														}]
+												}]
+										}]
+								}]
+						}, {
+							"ExpressionStatementNode":	[{
+									"CallFuncNode":	[{
+											"IdentifierNode":	"printf"
+										}, {
+											"LiteralNode":	"TRUE!"
+										}]
+								}]
+						}, {
+							"ReturnStatementNode":	[{
+									"IntegerNode":	"0"
+								}]
+						}]
+				}]
+		}]
+}

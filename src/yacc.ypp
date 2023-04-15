@@ -1,0 +1,352 @@
+%{
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <malloc.h>
+#include <math.h>
+#include "cjson/cJSON.h"
+#include "AST.h"
+
+// 全局变量
+BlockNode* root;
+
+// 在lex.yy.c里定义，会被yyparse()调用。在此声明消除编译和链接错误。
+extern int yylex(void); 
+
+// 在此声明，消除yacc生成代码时的告警
+extern int yyparse(void); 
+    
+int yywrap()
+{
+	return 1;
+}
+
+// 该函数在y.tab.c里会被调用，需要在此定义
+void yyerror(const char *s)
+{
+	printf("[error] %s\n", s);
+}
+
+
+%}
+
+%token IF EXTERN FOR RETURN SEMI COMMA 
+%token LSBORDER RSBORDER LMBORDER RMBORDER LLBORDER RLBORDER  
+%token INT CHAR ID INTEGER STRING LT LE GT GE 
+%token NEQUAL GVAL PLUS MINUS MUL DIV ADDR
+%token INVALID
+
+%union
+{
+    int intValue;
+    char *stringValue;
+    int token;
+    BlockNode* block;
+    ExpressionNode* expr;
+    StatementNode* stat;
+    IdentifierNode* ident;
+    VariableDeclarationNode* varDec;
+    ArrayDeclarationNode* arrayDec;
+    ArrayIndexNode* aryIndx;
+    CallFuncNode* calFunc;
+    BinaryOperatorNode* bOpr;
+    AssignmentNode* asng;
+    IDType type;
+    std::vector<shared_ptr<VariableDeclarationNode>>* vardec_vec;
+    std::vector<shared_ptr<ExpressionNode>>* expr_vec;
+
+}
+%type <type> type
+%type <block> program statements
+%type <expr> expr assignment  
+%type <stat> statement func_dec return_statement if_statement for_statement
+%type <varDec> val_dec
+%type <arrayDec> array_dec
+%type <aryIndx> array_index
+%type <calFunc> func_call
+%type <bOpr> binaryopr
+%type <ident> identifier
+%type <vardec_vec> arg_list_define
+%type <expr_vec> arg_list
+
+%%
+program: statements
+{
+    // printf("program -> statements\n");
+    root = $1; // program只是一个指针，没有实例
+};
+
+statements: statements statement
+{
+    // printf("statements -> statements statement\n");
+    $1->statements->push_back(shared_ptr<StatementNode>($2));
+}
+| statement
+{
+    // printf("statements -> statement\n");
+    $$ = new BlockNode(); 
+    $$->statements->push_back(shared_ptr<StatementNode>($1));
+};
+
+statement: expr SEMI
+{
+    // printf("statement -> expr SEMI\n");
+    $$ = new ExpressionStatementNode(shared_ptr<ExpressionNode>($1));
+}
+| val_dec SEMI
+{
+    // printf("statement -> val_dec SEMI\n");
+    $$ = $1;
+}
+| array_dec SEMI
+{
+    // printf("statement -> array_dec SEMI\n");
+    $$ = $1;
+}
+| func_dec 
+{
+    // printf("statement -> func_dec\n");
+    $$ = $1;
+}
+| return_statement SEMI 
+{
+    // printf("statement -> return_statement SEMI\n");
+    $$ = $1;
+
+}
+| if_statement
+{
+    // printf("statement -> if_statement\n");
+    $$ = $1;
+}
+| for_statement
+{
+    // printf("statement -> for_statement\n");
+    $$ = $1;
+};
+
+// ***************
+expr: INTEGER
+{
+    // printf("expr -> integer\n");
+    $$ = new IntegerNode($<intValue>1);
+}
+| identifier
+{
+    // printf("expr -> identifier\n");
+    $$ = $1;
+}
+| array_index
+{
+    // printf("expr -> array_index\n");
+    $$ = $1;
+}
+| func_call
+{
+    // printf("expr -> func_call\n");
+    $$ = $1;
+}
+| binaryopr
+{
+    // printf("expr -> binaryopr\n");
+    $$ = $1;
+}
+| assignment
+{
+    // printf("expr -> assignment\n");
+    $$ = $1;
+}
+| expr NEQUAL expr
+{
+    // printf("expr -> expr NEQUAL expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 9, shared_ptr<ExpressionNode>($3));
+}
+| expr LT expr
+{
+    // printf("expr -> expr LT expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 5, shared_ptr<ExpressionNode>($3));
+}
+| expr LE expr
+{
+    // printf("expr -> expr LE expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 6, shared_ptr<ExpressionNode>($3));
+}
+| expr GT expr
+{
+    // printf("expr -> expr GT expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 7, shared_ptr<ExpressionNode>($3));
+}
+| expr GE expr
+{
+    // printf("expr -> expr GE expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 8, shared_ptr<ExpressionNode>($3));
+}
+| STRING
+{
+    // printf("expr -> STRING\n");
+    $$ = new LiteralNode($<stringValue>1);
+}
+| ADDR array_index
+{
+    // printf("expr -> ADDR array_index\n");
+    $$ = new AddrNode(shared_ptr<ArrayIndexNode>($2));
+
+}
+| ADDR identifier
+{
+    // printf("expr -> ADDR identifier\n");
+    $$ = new AddrNode(shared_ptr<IdentifierNode>($2));
+}
+;
+
+val_dec: type identifier
+{
+    // printf("val_dec -> type identifier\n");
+    $$ = new VariableDeclarationNode($1, shared_ptr<IdentifierNode>($2), nullptr);
+}
+| type identifier GVAL expr
+{
+    // printf("val_dec -> type identifier GVAL expr\n");
+    $$ = new VariableDeclarationNode($1, shared_ptr<IdentifierNode>($2), shared_ptr<ExpressionNode>($4));
+}
+
+array_dec: type identifier LMBORDER expr RMBORDER
+{
+    // printf("array_dec-> type identifier LMBORDER expr RMBORDER\n");
+    $$ = new ArrayDeclarationNode($1, shared_ptr<IdentifierNode>($2), shared_ptr<ExpressionNode>($4));
+}
+
+
+func_dec: type identifier LSBORDER arg_list_define RSBORDER LLBORDER statements RLBORDER
+{
+    // printf("func_dec -> type identifier LSBORDER arg_list_define RSBORDER LLBORDER statements RLBORDER\n");
+    $$ = new FunctionDeclarationNode($1, shared_ptr<IdentifierNode>($2), shared_ptr<VariableList>($4), shared_ptr<BlockNode>($7), false);
+}
+| EXTERN type identifier LSBORDER arg_list_define RSBORDER SEMI
+{
+    // printf("func_dec -> EXTERN type identifier LSBORDER arg_list_define COMMA RSBORDER SEMI\n");
+    $$ = new FunctionDeclarationNode($2, shared_ptr<IdentifierNode>($3), shared_ptr<VariableList>($5), nullptr, true);
+}
+;
+
+type: INT
+{
+    // printf("type -> INT\n");
+    $$ = INTTYPE;
+}
+| CHAR
+{
+    // printf("type -> CHAR\n");
+    $$ = CHARTYPE;
+}
+;
+
+return_statement: RETURN expr
+{
+    // printf("return_statement -> RETURN expr\n");
+    $$ = new ReturnStatementNode(shared_ptr<ExpressionNode>($2));
+};
+
+if_statement: IF LSBORDER expr RSBORDER LLBORDER statements RLBORDER
+{
+    // printf("if_statement -> IF LSBORDER expr RSBORDER LLBORDER statements RLBORDER\n");
+    $$ = new IfStatementNode(shared_ptr<ExpressionNode>($3), shared_ptr<BlockNode>($6), nullptr);
+};
+
+for_statement: FOR LSBORDER statement statement expr RSBORDER LLBORDER statements RLBORDER
+{
+    // printf("for_statement -> FOR LSBORDER statement statement expr RSBORDER LLBORDER statements RLBORDER\n");
+    $$ = new ForStatementNode(shared_ptr<BlockNode>($8), shared_ptr<StatementNode>($3), shared_ptr<StatementNode>($4), shared_ptr<ExpressionNode>($5));
+};
+
+
+func_call: identifier LSBORDER arg_list RSBORDER
+{
+    // printf("func_call -> identifier LSBORDER arg_list RSBORDER\n");
+    $$ = new CallFuncNode(shared_ptr<IdentifierNode>($1), shared_ptr<ExpressionList>($3));
+};
+
+binaryopr: expr PLUS expr
+{
+    // printf("binaryopr -> expr PLUS expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 1, shared_ptr<ExpressionNode>($3));
+}
+| expr MINUS expr
+{
+    // printf("binaryopr -> expr MINUS expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 2, shared_ptr<ExpressionNode>($3));
+}
+| expr MUL expr
+{
+    // printf("binaryopr -> expr MUL expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 3, shared_ptr<ExpressionNode>($3));
+}
+| expr DIV expr
+{
+    // printf("binaryopr -> expr DIV expr\n");
+    $$ = new BinaryOperatorNode(shared_ptr<ExpressionNode>($1), 4, shared_ptr<ExpressionNode>($3));
+};
+
+assignment: identifier GVAL expr
+{
+    // printf("assignment -> identifier GVAL expr\n");
+    $$ = new AssignmentNode(shared_ptr<IdentifierNode>($1), shared_ptr<ExpressionNode>($3));
+}
+| array_index GVAL expr 
+{
+    // printf("assignment -> array_index GVAL expr\n");
+    $$ = new ArrayAssignmentNode(shared_ptr<ArrayIndexNode>($1), shared_ptr<ExpressionNode>($3));
+};
+
+array_index: identifier LMBORDER expr RMBORDER
+{
+    // printf("array_index -> identifier LMBORDER expr RMBORDER\n");
+    $$ = new ArrayIndexNode(shared_ptr<IdentifierNode>($1), shared_ptr<ExpressionNode>($3));
+};
+
+identifier: ID
+{
+    // printf("identifier -> ID\n");
+    $$ = new IdentifierNode($<stringValue>1);
+}
+
+arg_list_define: 
+{
+    $$ = new VariableList(); 
+}
+| arg_list_define COMMA val_dec
+{
+    // printf("arg_list_define -> val_dec COMMA arg_list_define\n");
+    $1->push_back(shared_ptr<VariableDeclarationNode>($<varDec>3));
+    $$ = $1;
+}
+| val_dec
+{
+    // printf("arg_list_define -> val_dec\n");
+    $$ = new VariableList(); 
+    $$->push_back(shared_ptr<VariableDeclarationNode>($<varDec>1));
+}
+;
+
+arg_list:
+{
+    // printf("arg_list -> \n");
+    $$ = new ExpressionList(); 
+}
+| arg_list COMMA expr 
+{
+    // printf("arg_list -> expr COMMA arg_list\n");
+    $1->push_back(shared_ptr<ExpressionNode>($3));
+    $$ = $1;
+}
+| expr
+{
+    // printf("arg_list -> expr\n");
+    $$ = new ExpressionList(); 
+    $$->push_back(shared_ptr<ExpressionNode>($1));
+};
+
+
+%%
+
+
