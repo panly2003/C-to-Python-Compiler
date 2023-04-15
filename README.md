@@ -12,55 +12,55 @@
 
 ├── src 源代码文件夹
 
-​		├──  bubbleSort.c 排序测例
+​		    ├──  bubbleSort.c 排序测例
 
-​		├──  palindrome_string.c 检测回文串测例
+​		    ├──  palindrome_string.c 检测回文串测例
 
-​		├──  lex.l 词法分析文件
+​		    ├──  lex.l 词法分析文件
 
-​		├──  yacc.ypp 语法分析文件
+​		    ├──  yacc.ypp 语法分析文件
 
-​		├──  AST.h 语法树节点定义文件
+​		    ├──  AST.h 语法树节点定义文件
 
-​		├──  AST.cpp 语法树节点类方法实现文件
+​		    ├──  AST.cpp 语法树节点类方法实现文件
 
-​		├──  codegen.h 代码生成相关头文件
+​		    ├──  codegen.h 代码生成相关头文件
 
-​		├──  codegen.cpp 代码生成相关函数实现文件
+​		    ├──  codegen.cpp 代码生成相关函数实现文件
 
-​		├──  cjson文件夹，工具文件（不是我们自己写的），提供了一些生成json格式文件的接口
+​		    ├──  cjson文件夹，工具文件（不是我们自己写的），提供了一些生成json格式文件的接口
 
-​		├──  parser_main.cpp 语法分析main文件
+​		    ├──  parser_main.cpp 语法分析main文件
 
-​		├──  main.cpp 整体main文件
+​		    ├──  main.cpp 整体main文件
 
 ├── exe 包含两个测例 & 三个错误测例 & parser可执行文件 & main可执行文件
 
-​		├──  bubbleSort.c 排序测例
+​		    ├──  bubbleSort.c 排序测例
 
-​		├──  palindrome_string.c 检测回文串测例
+​		    ├──  palindrome_string.c 检测回文串测例
 
-​		├──  error1.c  error2.c  error3.c  三个错误测例
+​		    ├──  error1.c  error2.c  error3.c  三个错误测例
 
-​		├── parser 语法分析可执行文件
+​		    ├── parser 语法分析可执行文件
 
-​		├── main  C to Python编译器可执行文件
+​		    ├── main  C to Python编译器可执行文件
 
-​		├── readme执行说明
+​		    ├── readme执行说明
 
 ├── result 执行结果
 
-​		├──  bubbleSort.json 排序语法分析产生的.json文件
+​		    ├──  bubbleSort.json 排序语法分析产生的.json文件
 
-​		├──  bubbleSort.png  排序语法分析可视化图像
+​		    ├──  bubbleSort.png  排序语法分析可视化图像
 
-​		├──  bubbleSort.py     排序.c文件翻译出的python文件
+​		    ├──  bubbleSort.py     排序.c文件翻译出的python文件
 
-​	    ├──  palindrome_string.json 回文串检测语法分析产生的.json文件
+​	        ├──  palindrome_string.json 回文串检测语法分析产生的.json文件
 
-​		├──  palindrome_string.png  回文串检测语法分析可视化图像
+​		    ├──  palindrome_string.png  回文串检测语法分析可视化图像
 
-​		├──  palindrome_string.py     回文串检测.c文件翻译出的python文件
+​		    ├──  palindrome_string.py     回文串检测.c文件翻译出的python文件
 
 ├── 文档
 
